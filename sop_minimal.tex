@@ -1,0 +1,179 @@
+\documentclass[a4paper]{article}
+\usepackage[margin=1.5cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{circuitikz}
+
+\begin{document}
+
+\begin{figure}[htbp]
+\centering
+\begin{circuitikz}[scale=1, transform shape]
+    \node (inA) at (0, 4.5) [left] {$A$};
+    \node (inB) at (0, 3.5) [left] {$B$};
+    \node (inC) at (0, 2.5) [left] {$C$};
+    \node (inD) at (0, 1.5) [left] {$D$};
+
+    % Gerbang AND 1 (untuk A . C)
+    \node [and port, number inputs=2] (and1) at (5, 4) {};
+    \node [above] at (and1.north) {AND};
+
+    % Gerbang AND 2 (untuk A . D)
+    \node [and port, number inputs=2] (and2) at (5, 2.25) {};
+    \node [above] at (and2.north) {AND};
+
+    % Gerbang AND 3 (untuk B . C . D)
+    \node [and port, number inputs=3] (and3) at (5, 0.5) {};
+    \node [above] at (and3.north) {AND};
+
+    % Gerbang OR Utama (3 Input)
+    \node [or port, number inputs=3] (or1) at (9, 2.25) {};
+    \node [above] at (or1.north) {OR};
+    
+    % --- Input A ---
+    \draw (inA) -- (2, 4.5);
+    \fill (1, 4.5) circle (2pt); % Titik cabang A ke AND2
+    \draw (1, 4.5) |- (and2.in 1);
+    \draw (2, 4.5) |- (and1.in 1);
+
+    % --- Input B ---
+    \draw (inB) -- (3, 3.5);
+    \draw (3, 3.5) |- (and3.in 1);
+
+    % --- Input C ---
+    \draw (inC) -- (2.5, 2.5);
+    \fill (1.5, 2.5) circle (2pt); % Titik cabang C ke AND1
+    \draw (1.5, 2.5) |- (and1.in 2);
+    \draw (2.5, 2.5) |- (and3.in 2);
+
+    % --- Input D ---
+    \draw (inD) -- (3.5, 1.5);
+    \fill (2, 1.5) circle (2pt); % Titik cabang D ke AND2
+    \draw (2, 1.5) |- (and2.in 2);
+    \draw (3.5, 1.5) |- (and3.in 3);
+
+    % --- 4. Menghubungkan Output AND ke Input OR ---
+    \draw (and1.out) -| (or1.in 1);
+    \draw (and2.out) -- (or1.in 2);
+    \draw (and3.out) -| (or1.in 3);
+
+    % --- Output Akhir F ---
+    \draw (or1.out) -- ++(1, 0) node[right] {$F_2$};
+
+\end{circuitikz}
+\caption{Rangkaian Logika SOP Minimal $F = A \cdot C + A \cdot D + B \cdot C \cdot D$}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\begin{circuitikz}[scale=1, transform shape]
+    \node (inA) at (0, 4.5) [left] {$A$};
+    \node (inB) at (0, 3.5) [left] {$B$};
+    \node (inC) at (0, 2.5) [left] {$C$};
+    \node (inD) at (0, 1.5) [left] {$D$};
+
+    % Gerbang OR 1 (untuk C + D, 2 input)
+    \node [or port, number inputs=2] (or1) at (4, 4) {};
+    \node [above] at (or1.north) {OR};
+
+    % Gerbang AND untuk (B . C . D, 3 input)
+    \node [and port, number inputs=3] (and1) at (4, 2) {};
+    \node [above] at (and1.north) {AND};
+
+    % Gerbang OR 2 (untuk A + (BCD), 2 input: A dan output AND)
+    \node [or port, number inputs=2] (or2) at (7, 2) {};
+    \node [above] at (or2.north) {OR};
+
+    % Gerbang AND Utama (menggabungkan OR1 dan OR2)
+    \node [and port, number inputs=2] (and_utama) at (10, 3) {};
+    \node [above] at (and_utama.north) {AND};
+
+    % Input C dan D ke OR1
+    \draw (inC) -- (2, 2.5) |- (or1.in 2);
+    \fill (2, 2.5) circle (2pt); 
+    \draw (inD) -- (2.5, 1.5) |- (or1.in 1);
+
+    % Input B, C, D ke AND1 (BCD)
+    \draw (inB) -- (1.5, 3.5) |- (and1.in 1);
+    \draw (1.5, 2.5) -- (1.5, 2.5) -| (and1.in 2);
+    \draw (2.0, 1.5) -- (2.0, 1.5) -| (and1.in 3);
+
+    % Input A ke OR2
+    \draw (inA) -| (5.5, 4.5) |- (or2.in 1);
+
+    % Output AND1 ke Input OR2
+    \draw (and1.out) -| (or2.in 2);
+
+    % Output OR1 dan OR2 ke AND Utama
+    \draw (or1.out) -| (and_utama.in 1);
+    \draw (or2.out) -| (and_utama.in 2);
+
+    % --- Output Akhir F1 ---
+    \draw (and_utama.out) -- ++(1, 0) node[right] {$F_1$};
+
+\end{circuitikz}
+\caption{Rangkaian Logika Ekspresi Awal $F = (C + D) \cdot [A + (B \cdot C \cdot D)]$ }
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\begin{circuitikz}[scale=0.85, transform shape]
+    \node (inA) at (0, 4.5) [left] {$A$};
+    \node (inB) at (0, 3.2) [left] {$B$};
+    \node (inC) at (0, 1.9) [left] {$C$};
+    \node (inD) at (0, 0.6) [left] {$D$};
+
+    % Garis horizontal bus input
+    \draw (0, 4.5) -- (0.8, 4.5);
+    \draw (0, 3.2) -- (0.8, 3.2);
+    \draw (0, 1.9) -- (0.8, 1.9);
+    \draw (0, 0.6) -- (0.8, 0.6);
+
+    % --- 2. Posisi Gerbang NAND (NAND-Only Implementation) ---
+    % NAND Level 1 - Suku 1: (A . C)'
+    \node [nand port, number inputs=2] (nand1) at (4.0, 3.8) {};
+    \node [above] at (nand1.north) {NAND};
+
+    % NAND Level 1 - Suku 2: (A . D)'
+    \node [nand port, number inputs=2] (nand2) at (4.0, 2.2) {};
+    \node [above] at (nand2.north) {NAND};
+
+    % NAND Level 1 - Suku 3: (B . C . D)'
+    \node [nand port, number inputs=3] (nand3) at (4.0, 0.5) {};
+    \node [above] at (nand3.north) {NAND};
+
+    % NAND Level 2 - Gerbang NAND Utama (3-input untuk menggabungkan hasil)
+    \node [nand port, number inputs=3] (nand_utama) at (8.5, 2.2) {};
+    \node [above] at (nand_utama.north) {NAND};
+
+    % Input A ke NAND1 dan NAND2
+    \draw (0.8, 4.5) -- (1.5, 4.5) |- (nand1.in 1);
+    \draw (1.5, 4.5) |- (nand2.in 1);
+    \fill (1.5, 4.5) circle (2pt);
+
+    % Input B ke NAND3
+    \draw (0.8, 3.2) -- (2.0, 3.2) |- (nand3.in 1);
+
+    % Input C ke NAND1 dan NAND3
+    \draw (0.8, 1.9) -- (2.2, 1.9) |- (nand1.in 2);
+    \draw (2.2, 1.9) |- (nand3.in 2);
+    \fill (2.2, 1.9) circle (2pt);
+
+    % Input D ke NAND2 dan NAND3
+    \draw (0.8, 0.6) -- (2.5, 0.6) |- (nand2.in 2);
+    \draw (2.5, 0.6) |- (nand3.in 3);
+    \fill (2.5, 0.6) circle (2pt);
+
+    % --- 4. Hubungkan Output NAND Level 1 ke NAND Utama ---
+    \draw (nand1.out) -| (nand_utama.in 1);
+    \draw (nand2.out) -- (nand_utama.in 2);
+    \draw (nand3.out) -| (nand_utama.in 3);
+
+    % --- Output Akhir F ---
+    \draw (nand_utama.out) -- ++(1, 0) node[right] {$F$};
+
+\end{circuitikz}
+\caption{Implementasi Rangkaian NAND-Only  $F = ((A \cdot C)' \cdot (A \cdot D)' \cdot (B \cdot C \cdot D)')'$}
+\end{figure}
+
+
+\end{document}
