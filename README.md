@@ -11,6 +11,9 @@ Fungsionalitas inti meliputi :
 
 3. Representasi Gerbang Universal ($f_{\text{nand}}$): Mensimulasikan rancangan rangkaian fisik menggunakan gerbang universal  NAND.Verifikasi Otomatis: Melakukan pengujian tabel kebenaran secara menyeluruh pada $16$ kombinasi masukan ($A, B, C, D$) untuk memastikan seluruh fungsi bernilai ekuivalen (100% cocok).
 
+## Rangkaian Logika 
+[![Pratinjau Dokumen PDF](preview.png)](sop_minimal.pdf)
+
 ## Requirement
 * Python 3 (Direkomendasikan: Python 3.8 atau yang lebih baru)
 
