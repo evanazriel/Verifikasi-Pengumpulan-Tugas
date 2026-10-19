@@ -5,11 +5,11 @@ Mata kuliah Matematika Diskrit diampu oleh : Andri Rahadyan S.Pd., M.Si
 
 Proyek ini dibuat untuk menyelesaikan Studi Kasus 5: Validasi Pengumpulan Tugas pada LMS Kampus dalam mata kuliah Matematika Diskrit. Program ini bertujuan untuk memodelkan, menyederhanakan, dan memverifikasi kesetaraan ekspresi logika Boolean dari aturan verifikasi sistem LMS menggunakan Python.
 Fungsionalitas inti meliputi :
-1. Representasi Fungsi Awal ($f\_ awal$): Memodelkan aturan bisnis asli sistem LMS ke dalam fungsi Boolean ($C + D \cdot [A + (B \cdot C \cdot D)]$).
+1. Representasi Fungsi Awal ($f$\_awal): Memodelkan aturan bisnis asli sistem LMS ke dalam fungsi Boolean ($C + D \cdot [A + (B \cdot C \cdot D)]$).
 
-2. Representasi Fungsi Sederhana ($f\_ sederhana$): Menerapkan hasil penyederhanaan bentuk Sum-of-Products (SOP) minimal ($A \cdot C + A \cdot D + B \cdot C \cdot D$) menggunakan hukum Aljabar Boolean dan Peta Karnaugh (K-Map).
+2. Representasi Fungsi Sederhana ($f$\_sederhana): Menerapkan hasil penyederhanaan bentuk Sum-of-Products (SOP) minimal ($A \cdot C + A \cdot D + B \cdot C \cdot D$) menggunakan hukum Aljabar Boolean dan Peta Karnaugh (K-Map).
 
-3. Representasi Gerbang Universal ($f\_ nand$): Mensimulasikan rancangan rangkaian fisik menggunakan gerbang universal  NAND.Verifikasi Otomatis: Melakukan pengujian tabel kebenaran secara menyeluruh pada $16$ kombinasi masukan ($A, B, C, D$) untuk memastikan seluruh fungsi bernilai ekuivalen (100% cocok).
+3. Representasi Gerbang Universal ($f$\_nand): Mensimulasikan rancangan rangkaian fisik menggunakan gerbang universal  NAND.Verifikasi Otomatis: Melakukan pengujian tabel kebenaran secara menyeluruh pada $16$ kombinasi masukan ($A, B, C, D$) untuk memastikan seluruh fungsi bernilai ekuivalen (100% cocok).
 
 ## Requirement
 * Python 3 (Direkomendasikan: Python 3.8 atau yang lebih baru)
